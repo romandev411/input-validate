@@ -76,11 +76,15 @@ function validateInputs(elems) {
 
         const status = validate(el);
 
+        console.log(status.error, el)
+
         if (status.error) {
             el.classList.add('error');
+            el.classList.remove('success');
             statusValidate = false;
         } else {
             el.classList.add('success');
+            el.classList.remove('error');
         }
     }
 
@@ -94,11 +98,11 @@ function textValidate(val) {
 function emailValidate(val) {
     const symbol1 = '.';
     const symbol2 = '@';
-    if (!~val.indexOf(symbol2) && !~val.indexOf(symbol1)) {
+    if (!~val.indexOf(symbol2) || !~val.indexOf(symbol1)) {
         return false;
     }
 
-    return val.indexOf(symbol2) > val.indexOf(symbol1);
+    return val.indexOf(symbol2) < val.indexOf(symbol1);
 }
 
 function passwordValidate(val) {
@@ -133,7 +137,7 @@ function validate(el) {
             break;
         case 'password':
             statusVal = passwordValidate(validateVal);
-            break;    
+            break;
     }
 
     return {
